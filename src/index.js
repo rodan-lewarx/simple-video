@@ -5,15 +5,15 @@ require('./index.css').toString();
 
 /**
  * SimpleVideo Tool for the Editor.js
- * Works only with pasted image URLs and requires no server-side uploader.
+ * Works only with pasted video URLs and requires no server-side uploader.
  *
  * @typedef {object} SimpleVideoData
  * @description Tool's input and output data format
- * @property {string} url — image URL
- * @property {string} caption — image caption
- * @property {boolean} withBorder - should image be rendered with border
- * @property {boolean} withBackground - should image be rendered with background
- * @property {boolean} stretched - should image be stretched to full width of container
+ * @property {string} url — video URL
+ * @property {string} caption — video caption
+ * @property {boolean} withBorder - should video be rendered with border
+ * @property {boolean} withBackground - should video be rendered with background
+ * @property {boolean} stretched - should video be stretched to full width of container
  */
 class SimpleVideo {
   /**
@@ -53,7 +53,7 @@ class SimpleVideo {
        * Tool's classes
        */
       wrapper: 'cdx-simple-video',
-      imageHolder: 'cdx-simple-video__picture',
+      videoHolder: 'cdx-simple-video__picture',
       caption: 'cdx-simple-video__caption'
     };
 
@@ -62,8 +62,8 @@ class SimpleVideo {
      */
     this.nodes = {
       wrapper: null,
-      imageHolder: null,
-      image: null,
+      videoHolder: null,
+      video: null,
       caption: null
     };
 
@@ -79,7 +79,7 @@ class SimpleVideo {
     };
 
     /**
-     * Available Image settings
+     * Available Video settings
      */
     this.settings = [
       {
@@ -100,15 +100,15 @@ class SimpleVideo {
   /**
    * Creates a Block:
    *  1) Show preloader
-   *  2) Start to load an image
-   *  3) After loading, append image and caption input
+   *  2) Start to load an video
+   *  3) After loading, append video and caption input
    * @public
    */
   render() {
     let wrapper = this._make('div', [this.CSS.baseClass, this.CSS.wrapper]),
       loader = this._make('div', this.CSS.loading),
-      imageHolder = this._make('div', this.CSS.imageHolder),
-      image = this._make('video'),
+      videoHolder = this._make('div', this.CSS.videoHolder),
+      video = this._make('video'),
       caption = this._make('div', [this.CSS.input, this.CSS.caption], {
         contentEditable: 'true',
         innerHTML: this.data.caption || ''
@@ -119,26 +119,26 @@ class SimpleVideo {
     wrapper.appendChild(loader);
 
     if (this.data.url) {
-      image.src = this.data.url;
+      video.src = this.data.url;
     }
 
-    image.onload = () => {
+    video.onload = () => {
       wrapper.classList.remove(this.CSS.loading);
-      imageHolder.appendChild(image);
-      wrapper.appendChild(imageHolder);
+      videoHolder.appendChild(video);
+      wrapper.appendChild(videoHolder);
       wrapper.appendChild(caption);
       loader.remove();
       this._acceptTuneView();
     };
 
-    image.onerror = (e) => {
+    video.onerror = (e) => {
       // @todo use api.Notifies.show() to show error notification
-      console.log('Failed to load an image', e);
+      console.log('Failed to load the video', e);
     };
 
-    this.nodes.imageHolder = imageHolder;
+    this.nodes.videoHolder = videoHolder;
     this.nodes.wrapper = wrapper;
-    this.nodes.image = image;
+    this.nodes.video = video;
     this.nodes.caption = caption;
 
     return wrapper;
@@ -229,7 +229,7 @@ class SimpleVideo {
   }
 
   /**
-   * Returns image data
+   * Returns video data
    * @return {SimpleVideoData}
    */
   get data() {
@@ -237,15 +237,15 @@ class SimpleVideo {
   }
 
   /**
-   * Set image data and update the view
+   * Set video data and update the view
    *
    * @param {SimpleVideoData} data
    */
   set data(data) {
     this._data = Object.assign({}, this.data, data);
 
-    if (this.nodes.image) {
-      this.nodes.image.src = this.data.url;
+    if (this.nodes.video) {
+      this.nodes.video.src = this.data.url;
     }
 
     if (this.nodes.caption) {
@@ -261,7 +261,7 @@ class SimpleVideo {
   static get pasteConfig() {
     return {
       patterns: {
-        image: /https?:\/\/\S+\.(mp4|webm)$/i
+        video: /https?:\/\/\S+\.(mp4|webm)$/i
       },
       tags: [ 'video' ],
       files: {
@@ -271,7 +271,7 @@ class SimpleVideo {
   }
 
   /**
-   * Makes buttons with tunes: add background, add border, stretch image
+   * Makes buttons with tunes: add background, add border, stretch video
    * @return {HTMLDivElement}
    */
   renderSettings() {
@@ -334,7 +334,7 @@ class SimpleVideo {
    */
   _acceptTuneView() {
     this.settings.forEach( tune => {
-      this.nodes.imageHolder.classList.toggle(this.CSS.imageHolder + '--' + tune.name.replace(/([A-Z])/g, (g) => `-${g[0].toLowerCase()}`), !!this.data[tune.name]);
+      this.nodes.videoHolder.classList.toggle(this.CSS.videoHolder + '--' + tune.name.replace(/([A-Z])/g, (g) => `-${g[0].toLowerCase()}`), !!this.data[tune.name]);
 
       if (tune.name === 'stretched') {
         this.api.blocks.stretchBlock(this.blockIndex, !!this.data.stretched);
