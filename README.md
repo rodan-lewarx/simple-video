@@ -1,8 +1,8 @@
 ![](https://badgen.net/badge/Editor.js/v2.0/blue)
 
-# Simple Image Tool
+# Simple Video Tool
 
-Provides Image Blocks for the [Editor.js](https://editorjs.io).
+Provides Video Blocks for the [Editor.js](https://editorjs.io).
 
 Works only with pasted image URLs and requires no server-side uploader.
 
@@ -15,13 +15,13 @@ Works only with pasted image URLs and requires no server-side uploader.
 Get the package
 
 ```shell
-npm i --save-dev @editorjs/simple-image
+npm i --save-dev simple-video
 ```
 
 Include module at your application
 
 ```javascript
-const SimpleImage = require('@editorjs/simple-image');
+const SimpleImage = require('simple-video-editorjs');
 ```
 
 ### Download to your project's source dir
@@ -31,7 +31,7 @@ const SimpleImage = require('@editorjs/simple-image');
 
 ### Load from CDN
 
-You can load specific version of package from [jsDelivr CDN](https://www.jsdelivr.com/package/npm/@editor/simple-image).
+You can load specific version of package from [jsDelivr CDN](https://www.jsdelivr.com/package/npm/simple-video-editorjs).
 
 `https://cdn.jsdelivr.net/npm/@editorjs/simple-image@latest`
 
@@ -51,7 +51,7 @@ var editor = EditorJS({
   
   tools: {
     ...
-    image: SimpleImage,
+    video: SimpleVideo,
   }
   
   ...
@@ -76,16 +76,16 @@ This Tool has no config params
 
 | Field          | Type      | Description                     |
 | -------------- | --------- | ------------------------------- |
-| url            | `string`  | image's url                     |
-| caption        | `string`  | image's caption                 |
-| withBorder     | `boolean` | add border to image             |
+| url            | `string`  | video's url                     |
+| caption        | `string`  | video's caption                 |
+| withBorder     | `boolean` | add border to video             |
 | withBackground | `boolean` | need to add background          |
-| stretched      | `boolean` | stretch image to screen's width |
+| stretched      | `boolean` | stretch video to screen's width |
 
 
 ```json
 {
-    "type" : "image",
+    "type" : "video",
     "data" : {
         "url" : "https://www.tesla.com/tesla_theme/assets/img/_vehicle_redesign/roadster_and_semi/roadster/hero.jpg",
         "caption" : "Roadster // tesla.com",

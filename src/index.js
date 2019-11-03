@@ -4,10 +4,10 @@
 require('./index.css').toString();
 
 /**
- * SimpleImage Tool for the Editor.js
+ * SimpleVideo Tool for the Editor.js
  * Works only with pasted image URLs and requires no server-side uploader.
  *
- * @typedef {object} SimpleImageData
+ * @typedef {object} SimpleVideoData
  * @description Tool's input and output data format
  * @property {string} url — image URL
  * @property {string} caption — image caption
@@ -15,11 +15,11 @@ require('./index.css').toString();
  * @property {boolean} withBackground - should image be rendered with background
  * @property {boolean} stretched - should image be stretched to full width of container
  */
-class SimpleImage {
+class SimpleVideo {
   /**
    * Render plugin`s main Element and fill it with saved data
    *
-   * @param {{data: SimpleImageData, config: object, api: object}}
+   * @param {{data: SimpleVideoData, config: object, api: object}}
    *   data — previously saved data
    *   config - user config for Tool
    *   api - Editor.js API
@@ -52,9 +52,9 @@ class SimpleImage {
       /**
        * Tool's classes
        */
-      wrapper: 'cdx-simple-image',
-      imageHolder: 'cdx-simple-image__picture',
-      caption: 'cdx-simple-image__caption'
+      wrapper: 'cdx-simple-video',
+      imageHolder: 'cdx-simple-video__picture',
+      caption: 'cdx-simple-video__caption'
     };
 
     /**
@@ -108,7 +108,7 @@ class SimpleImage {
     let wrapper = this._make('div', [this.CSS.baseClass, this.CSS.wrapper]),
       loader = this._make('div', this.CSS.loading),
       imageHolder = this._make('div', this.CSS.imageHolder),
-      image = this._make('img'),
+      image = this._make('video'),
       caption = this._make('div', [this.CSS.input, this.CSS.caption], {
         contentEditable: 'true',
         innerHTML: this.data.caption || ''
@@ -148,18 +148,18 @@ class SimpleImage {
    * @public
    * Saving method
    * @param {Element} blockContent - Tool's wrapper
-   * @return {SimpleImageData}
+   * @return {SimpleVideoData}
    */
   save(blockContent) {
-    let image = blockContent.querySelector('img'),
+    let video = blockContent.querySelector('video'),
       caption = blockContent.querySelector('.' + this.CSS.input);
 
-    if (!image) {
+    if (!video) {
       return this.data;
     }
 
     return Object.assign(this.data, {
-      url: image.src,
+      url: video.src,
       caption: caption.innerHTML
     });
   }
@@ -180,25 +180,17 @@ class SimpleImage {
   }
 
   /**
-   * Read pasted image and convert it to base64
+   * Read pasted video and convert it to base64
    *
    * @static
    * @param {File} file
-   * @returns {Promise<SimpleImageData>}
+   * @returns {Promise<SimpleVideoData>}
    */
   onDropHandler(file) {
-    const reader = new FileReader();
-
-    reader.readAsDataURL(file);
-
-    return new Promise(resolve => {
-      reader.onload = (event) => {
-        resolve({
-          url: event.target.result,
-          caption: file.name
-        });
-      };
-    });
+    return {
+      url: URL.createObjectURL(file),
+      caption: file.name
+    };
   }
 
   /**
@@ -209,10 +201,10 @@ class SimpleImage {
   onPaste(event) {
     switch (event.type) {
       case 'tag':
-        const img = event.detail.data;
+        const video = event.detail.data;
 
         this.data = {
-          url: img.src,
+          url: video.src,
         };
         break;
 
@@ -238,7 +230,7 @@ class SimpleImage {
 
   /**
    * Returns image data
-   * @return {SimpleImageData}
+   * @return {SimpleVideoData}
    */
   get data() {
     return this._data;
@@ -247,7 +239,7 @@ class SimpleImage {
   /**
    * Set image data and update the view
    *
-   * @param {SimpleImageData} data
+   * @param {SimpleVideoData} data
    */
   set data(data) {
     this._data = Object.assign({}, this.data, data);
@@ -269,11 +261,11 @@ class SimpleImage {
   static get pasteConfig() {
     return {
       patterns: {
-        image: /https?:\/\/\S+\.(gif|jpe?g|tiff|png)$/i
+        image: /https?:\/\/\S+\.(mp4|webm)$/i
       },
-      tags: [ 'img' ],
+      tags: [ 'video' ],
       files: {
-        mimeTypes: [ 'image/*' ]
+        mimeTypes: [ 'video/*' ]
       },
     };
   }
@@ -351,4 +343,4 @@ class SimpleImage {
   }
 }
 
-module.exports = SimpleImage;
+module.exports = SimpleVideo;
