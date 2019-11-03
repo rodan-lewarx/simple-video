@@ -21,7 +21,7 @@ npm i --save-dev simple-video
 Include module at your application
 
 ```javascript
-const SimpleImage = require('simple-video-editorjs');
+const SimpleVideo = require('simple-video-editorjs');
 ```
 
 ### Download to your project's source dir
