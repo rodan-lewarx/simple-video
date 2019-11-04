@@ -73,6 +73,7 @@ class SimpleVideo {
     this.data = {
       url: data.url || '',
       caption: data.caption || '',
+      controls: data.controls !== undefined ? data.controls : false,
       withBorder: data.withBorder !== undefined ? data.withBorder : false,
       withBackground: data.withBackground !== undefined ? data.withBackground : false,
       stretched: data.stretched !== undefined ? data.stretched : false,
@@ -94,6 +95,10 @@ class SimpleVideo {
         name: 'withBackground',
         icon: `<svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M10.043 8.265l3.183-3.183h-2.924L4.75 10.636v2.923l4.15-4.15v2.351l-2.158 2.159H8.9v2.137H4.7c-1.215 0-2.2-.936-2.2-2.09v-8.93c0-1.154.985-2.09 2.2-2.09h10.663l.033-.033.034.034c1.178.04 2.12.96 2.12 2.089v3.23H15.3V5.359l-2.906 2.906h-2.35zM7.951 5.082H4.75v3.201l3.201-3.2zm5.099 7.078v3.04h4.15v-3.04h-4.15zm-1.1-2.137h6.35c.635 0 1.15.489 1.15 1.092v5.13c0 .603-.515 1.092-1.15 1.092h-6.35c-.635 0-1.15-.489-1.15-1.092v-5.13c0-.603.515-1.092 1.15-1.092z"/></svg>`
       },
+      {
+        name: 'controls',
+        icon: `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M15.54 5.54L13.77 7.3 12 5.54 10.23 7.3 8.46 5.54 12 2zm2.92 10l-1.76-1.77L18.46 12l-1.76-1.77 1.76-1.77L22 12zm-10 2.92l1.77-1.76L12 18.46l1.77-1.76 1.77 1.76L12 22zm-2.92-10l1.76 1.77L5.54 12l1.76 1.77-1.76 1.77L2 12z"/><circle cx="12" cy="12" r="3"/><path fill="none" d="M0 0h24v24H0z"/></svg>`
+      }
     ];
   }
 
@@ -119,6 +124,7 @@ class SimpleVideo {
 
     if (this.data.url) {
       video.src = this.data.url;
+      video.controls = this.data.controls;
     }
 
     video.onloadstart = () => {
@@ -172,6 +178,7 @@ class SimpleVideo {
       withBorder: {},
       withBackground: {},
       stretched: {},
+      controls: {},
       caption: {
         br: true,
       },
@@ -247,6 +254,7 @@ class SimpleVideo {
 
     if (this.nodes.video) {
       this.nodes.video.src = this.data.url;
+      this.nodes.video.controls = this.data.controls;
     }
 
     if (this.nodes.caption) {
