@@ -1,6 +1,5 @@
 .cdx-simple-video {}
 
-
 .cdx-simple-video .cdx-loader {
   min-height: 200px;
 }
@@ -28,23 +27,6 @@
 
 .cdx-simple-video__caption[contentEditable=true][data-placeholder]:empty:focus::before {
   opacity: 0;
-}
-
-
-.cdx-simple-video__picture--with-background {
-  background: #eff2f5;
-  padding: 10px;
-}
-
-.cdx-simple-video__picture--with-background video {
-  display: block;
-  max-width: 60%;
-  margin: 0 auto;
-}
-
-.cdx-simple-video__picture--with-border {
-  border: 1px solid #e8e8eb;
-  padding: 1px;
 }
 
 .cdx-simple-video__picture--stretched video {
