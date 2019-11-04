@@ -106,23 +106,22 @@ class SimpleVideo {
    */
   render() {
     let wrapper = this._make('div', [this.CSS.baseClass, this.CSS.wrapper]),
-      loader = this._make('div', this.CSS.loading),
-      videoHolder = this._make('div', this.CSS.videoHolder),
-      video = this._make('video'),
-      caption = this._make('div', [this.CSS.input, this.CSS.caption], {
-        contentEditable: 'true',
-        innerHTML: this.data.caption || ''
-      });
+        loader = this._make('div', this.CSS.loading),
+        videoHolder = this._make('div', this.CSS.videoHolder),
+        video = this._make('video'),
+        caption = this._make('div', [this.CSS.input, this.CSS.caption], {
+          contentEditable: 'true',
+          innerHTML: this.data.caption || ''
+        });
 
-    caption.dataset.placeholder = 'Enter a caption';
-
+    //caption.dataset.placeholder = 'Enter a caption';
     wrapper.appendChild(loader);
 
     if (this.data.url) {
       video.src = this.data.url;
     }
 
-    video.onload = () => {
+    video.onloadstart = () => {
       wrapper.classList.remove(this.CSS.loading);
       videoHolder.appendChild(video);
       wrapper.appendChild(videoHolder);
