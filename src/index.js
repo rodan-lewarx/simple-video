@@ -11,7 +11,9 @@ require('./index.css').toString();
  * @description Tool's input and output data format
  * @property {string} url — video URL
  * @property {string} caption — video caption
+ * @property {boolean} autoplay - video autoplay enabled
  * @property {boolean} controls - video controls enabled
+ * @property {boolean} muted - video muted enabled
  * @property {boolean} stretched - should video be stretched to full width of container
  */
 class SimpleVideo {
@@ -72,7 +74,9 @@ class SimpleVideo {
     this.data = {
       url: data.url || '',
       caption: data.caption || '',
+      autoplay: data.autoplay !== undefined ? data.autoplay : false,
       controls: data.controls !== undefined ? data.controls : false,
+      muted: data.muted !== undefined ? data.muted : false,
       stretched: data.stretched !== undefined ? data.stretched : false,
     };
 
@@ -83,6 +87,15 @@ class SimpleVideo {
       {
         name: 'stretched',
         icon: `<svg width="17" height="10" viewBox="0 0 17 10" xmlns="http://www.w3.org/2000/svg"><path d="M13.568 5.925H4.056l1.703 1.703a1.125 1.125 0 0 1-1.59 1.591L.962 6.014A1.069 1.069 0 0 1 .588 4.26L4.38.469a1.069 1.069 0 0 1 1.512 1.511L4.084 3.787h9.606l-1.85-1.85a1.069 1.069 0 1 1 1.512-1.51l3.792 3.791a1.069 1.069 0 0 1-.475 1.788L13.514 9.16a1.125 1.125 0 0 1-1.59-1.591l1.644-1.644z"/></svg>`
+      },
+      {
+        name: 'autoplay',
+        icon: `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/><path d="M0 0h24v24H0z" fill="none"/></svg>`
+      },
+      {
+        name: 'muted',
+        icon: `
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M7 9v6h4l5 5V4l-5 5H7z"/><path d="M0 0h24v24H0z" fill="none"/></svg>`
       },
       {
         name: 'controls',
@@ -114,6 +127,8 @@ class SimpleVideo {
     if (this.data.url) {
       video.src = this.data.url;
       video.controls = this.data.controls;
+      video.autoplay = this.data.autoplay;
+      video.muted = this.data.muted;
     }
 
     video.onloadstart = () => {
@@ -154,7 +169,10 @@ class SimpleVideo {
 
     return Object.assign(this.data, {
       url: video.src,
-      caption: caption.innerHTML
+      caption: caption.innerHTML,
+      controls: video.controls,
+      autoplay: video.autoplay,
+      muted: video.muted
     });
   }
 
@@ -166,6 +184,8 @@ class SimpleVideo {
       url: {},
       stretched: {},
       controls: {},
+      autoplay: {},
+      muted: {},
       caption: {
         br: true,
       },
@@ -240,8 +260,10 @@ class SimpleVideo {
     this._data = Object.assign({}, this.data, data);
 
     if (this.nodes.video) {
-      this.nodes.video.src = this.data.url;
+      this.nodes.video.autoplay = this.data.autoplay;
       this.nodes.video.controls = this.data.controls;
+      this.nodes.video.muted = this.data.muted;
+      this.nodes.video.src = this.data.url;
     }
 
     if (this.nodes.caption) {
@@ -338,6 +360,14 @@ class SimpleVideo {
 
       if (tune.name === 'controls') {
         this.nodes.video.controls = this.data.controls;
+      }
+
+      if (tune.name === 'autoplay') {
+        this.nodes.video.autoplay = this.data.autoplay;
+      }
+
+      if (tune.name === 'muted') {
+        this.nodes.video.muted = this.data.muted;
       }
     });
   }
