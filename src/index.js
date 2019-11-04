@@ -187,10 +187,12 @@ class SimpleVideo {
    * @returns {Promise<SimpleVideoData>}
    */
   onDropHandler(file) {
-    return {
-      url: URL.createObjectURL(file),
-      caption: file.name
-    };
+    return new Promise((resolve, reject) => {
+      resolve({
+        url: URL.createObjectURL(file),
+        caption: file.name
+      });
+    });
   }
 
   /**
