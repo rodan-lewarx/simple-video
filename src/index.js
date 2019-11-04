@@ -348,6 +348,10 @@ class SimpleVideo {
       if (tune.name === 'stretched') {
         this.api.blocks.stretchBlock(this.blockIndex, !!this.data.stretched);
       }
+
+      if (tune.name === 'control') {
+        this.nodes.video.controls = this.data.controls;
+      }
     });
   }
 }
