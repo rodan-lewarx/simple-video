@@ -4,9 +4,8 @@
 
 Provides Video Blocks for the [Editor.js](https://editorjs.io).
 
-Works only with pasted image URLs and requires no server-side uploader.
+Works only with pasted videos and URLs and requires no server-side uploader.
 
-![](assets/image-uploading.gif)
 
 ## Installation
 
@@ -15,7 +14,7 @@ Works only with pasted image URLs and requires no server-side uploader.
 Get the package
 
 ```shell
-npm i --save-dev simple-video
+npm i --save-dev simple-video-editorjs
 ```
 
 Include module at your application
@@ -33,7 +32,7 @@ const SimpleVideo = require('simple-video-editorjs');
 
 You can load specific version of package from [jsDelivr CDN](https://www.jsdelivr.com/package/npm/simple-video-editorjs).
 
-`https://cdn.jsdelivr.net/npm/@editorjs/simple-image@latest`
+`https://cdn.jsdelivr.net/npm/@editorjs/simple-video-editorjs@latest`
 
 Then require this script on page with Editor.js.
 
@@ -64,13 +63,9 @@ This Tool has no config params
 
 ## Tool's settings
 
-![](https://capella.pics/c74cdeec-3405-48ac-a960-f784188cf9b4.jpg)
-
-1. Add border
-
-2. Stretch to full-width
-
-3. Add background
+1. Stretch to full-width
+2. Add default HTML controls for playback
+3. Enable autoplay and muted video.
 
 ## Output data
 
@@ -78,8 +73,9 @@ This Tool has no config params
 | -------------- | --------- | ------------------------------- |
 | url            | `string`  | video's url                     |
 | caption        | `string`  | video's caption                 |
-| withBorder     | `boolean` | add border to video             |
-| withBackground | `boolean` | need to add background          |
+| autoplay       | `boolean` | video will autoplay             |
+| muted          | `boolean` | video will be muted by defaul   |
+| controls       | `boolean` | video should display default controls|
 | stretched      | `boolean` | stretch video to screen's width |
 
 
@@ -87,10 +83,11 @@ This Tool has no config params
 {
     "type" : "video",
     "data" : {
-        "url" : "https://www.tesla.com/tesla_theme/assets/img/_vehicle_redesign/roadster_and_semi/roadster/hero.jpg",
-        "caption" : "Roadster // tesla.com",
-        "withBorder" : false,
-        "withBackground" : false,
+        "url" : "https://paul.kinlan.me/videos/2019-11-05--test-post-video-upload-0.mp4",
+        "caption" : "An aweomse video",
+        "autoplay" : false,
+        "controls" : false,
+        "muted": false,
         "stretched" : true
     }
 }
