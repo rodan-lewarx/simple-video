@@ -1,4 +1,5 @@
-.cdx-simple-video {}
+.cdx-simple-video {
+}
 
 .cdx-simple-video .cdx-loader {
   min-height: 200px;
@@ -13,20 +14,25 @@
   vertical-align: bottom;
 }
 
-.cdx-simple-video__caption[contentEditable=true][data-placeholder]:empty::before {
+.cdx-simple-video__caption[contentEditable="true"][data-placeholder]:empty::before {
   position: absolute;
   content: attr(data-placeholder);
   color: #707684;
   font-weight: normal;
   opacity: 0;
- }
+}
 
-.cdx-simple-video__caption[contentEditable=true][data-placeholder]:empty::before {
+.cdx-simple-video__caption[contentEditable="true"][data-placeholder]:empty::before {
   opacity: 1;
 }
 
-.cdx-simple-video__caption[contentEditable=true][data-placeholder]:empty:focus::before {
+.cdx-simple-video__caption[contentEditable="true"][data-placeholder]:empty:focus::before {
   opacity: 0;
+}
+
+.cdx-simple-video__picture {
+  display: flex;
+  justify-content: space-around;
 }
 
 .cdx-simple-video__picture--stretched video {

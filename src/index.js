@@ -1,7 +1,8 @@
+/* eslint-disable */
 /**
  * Build styles
  */
-require('./index.css').toString();
+require("./index.css").toString();
 
 /**
  * SimpleVideo Tool for the Editor.js
@@ -25,7 +26,7 @@ class SimpleVideo {
    *   config - user config for Tool
    *   api - Editor.js API
    */
-  constructor({data, config, api}) {
+  constructor({ data, config, api }) {
     /**
      * Editor.js API
      */
@@ -53,9 +54,9 @@ class SimpleVideo {
       /**
        * Tool's classes
        */
-      wrapper: 'cdx-simple-video',
-      videoHolder: 'cdx-simple-video__picture',
-      caption: 'cdx-simple-video__caption'
+      wrapper: "cdx-simple-video",
+      videoHolder: "cdx-simple-video__picture",
+      caption: "cdx-simple-video__caption",
     };
 
     /**
@@ -65,17 +66,17 @@ class SimpleVideo {
       wrapper: null,
       videoHolder: null,
       video: null,
-      caption: null
+      caption: null,
     };
 
     /**
      * Tool's initial data
      */
     this.data = {
-      url: data.url || '',
-      caption: data.caption || '',
+      url: data.url || "",
+      caption: data.caption || "",
       autoplay: data.autoplay !== undefined ? data.autoplay : false,
-      controls: data.controls !== undefined ? data.controls : false,
+      controls: data.controls !== undefined ? data.controls : true,
       muted: data.muted !== undefined ? data.muted : false,
       stretched: data.stretched !== undefined ? data.stretched : false,
     };
@@ -85,22 +86,22 @@ class SimpleVideo {
      */
     this.settings = [
       {
-        name: 'stretched',
-        icon: `<svg width="17" height="10" viewBox="0 0 17 10" xmlns="http://www.w3.org/2000/svg"><path d="M13.568 5.925H4.056l1.703 1.703a1.125 1.125 0 0 1-1.59 1.591L.962 6.014A1.069 1.069 0 0 1 .588 4.26L4.38.469a1.069 1.069 0 0 1 1.512 1.511L4.084 3.787h9.606l-1.85-1.85a1.069 1.069 0 1 1 1.512-1.51l3.792 3.791a1.069 1.069 0 0 1-.475 1.788L13.514 9.16a1.125 1.125 0 0 1-1.59-1.591l1.644-1.644z"/></svg>`
+        name: "stretched",
+        icon: `<svg width="17" height="10" viewBox="0 0 17 10" xmlns="http://www.w3.org/2000/svg"><path d="M13.568 5.925H4.056l1.703 1.703a1.125 1.125 0 0 1-1.59 1.591L.962 6.014A1.069 1.069 0 0 1 .588 4.26L4.38.469a1.069 1.069 0 0 1 1.512 1.511L4.084 3.787h9.606l-1.85-1.85a1.069 1.069 0 1 1 1.512-1.51l3.792 3.791a1.069 1.069 0 0 1-.475 1.788L13.514 9.16a1.125 1.125 0 0 1-1.59-1.591l1.644-1.644z"/></svg>`,
       },
       {
-        name: 'autoplay',
-        icon: `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/><path d="M0 0h24v24H0z" fill="none"/></svg>`
+        name: "autoplay",
+        icon: `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/><path d="M0 0h24v24H0z" fill="none"/></svg>`,
       },
       {
-        name: 'muted',
+        name: "muted",
         icon: `
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M7 9v6h4l5 5V4l-5 5H7z"/><path d="M0 0h24v24H0z" fill="none"/></svg>`
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M7 9v6h4l5 5V4l-5 5H7z"/><path d="M0 0h24v24H0z" fill="none"/></svg>`,
       },
       {
-        name: 'controls',
-        icon: `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M15.54 5.54L13.77 7.3 12 5.54 10.23 7.3 8.46 5.54 12 2zm2.92 10l-1.76-1.77L18.46 12l-1.76-1.77 1.76-1.77L22 12zm-10 2.92l1.77-1.76L12 18.46l1.77-1.76 1.77 1.76L12 22zm-2.92-10l1.76 1.77L5.54 12l1.76 1.77-1.76 1.77L2 12z"/><circle cx="12" cy="12" r="3"/><path fill="none" d="M0 0h24v24H0z"/></svg>`
-      }
+        name: "controls",
+        icon: `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M15.54 5.54L13.77 7.3 12 5.54 10.23 7.3 8.46 5.54 12 2zm2.92 10l-1.76-1.77L18.46 12l-1.76-1.77 1.76-1.77L22 12zm-10 2.92l1.77-1.76L12 18.46l1.77-1.76 1.77 1.76L12 22zm-2.92-10l1.76 1.77L5.54 12l1.76 1.77-1.76 1.77L2 12z"/><circle cx="12" cy="12" r="3"/><path fill="none" d="M0 0h24v24H0z"/></svg>`,
+      },
     ];
   }
 
@@ -112,14 +113,14 @@ class SimpleVideo {
    * @public
    */
   render() {
-    let wrapper = this._make('div', [this.CSS.baseClass, this.CSS.wrapper]),
-        loader = this._make('div', this.CSS.loading),
-        videoHolder = this._make('div', this.CSS.videoHolder),
-        video = this._make('video'),
-        caption = this._make('div', [this.CSS.input, this.CSS.caption], {
-          contentEditable: 'true',
-          innerHTML: this.data.caption || ''
-        });
+    let wrapper = this._make("div", [this.CSS.baseClass, this.CSS.wrapper]),
+      loader = this._make("div", this.CSS.loading),
+      videoHolder = this._make("div", this.CSS.videoHolder),
+      video = this._make("video"),
+      caption = this._make("div", [this.CSS.input, this.CSS.caption], {
+        contentEditable: "true",
+        innerHTML: this.data.caption || "",
+      });
 
     //caption.dataset.placeholder = 'Enter a caption';
     wrapper.appendChild(loader);
@@ -142,7 +143,7 @@ class SimpleVideo {
 
     video.onerror = (e) => {
       // @todo use api.Notifies.show() to show error notification
-      console.log('Failed to load the video', e);
+      console.log("Failed to load the video", e);
     };
 
     this.nodes.videoHolder = videoHolder;
@@ -160,8 +161,8 @@ class SimpleVideo {
    * @return {SimpleVideoData}
    */
   save(blockContent) {
-    let video = blockContent.querySelector('video'),
-      caption = blockContent.querySelector('.' + this.CSS.input);
+    let video = blockContent.querySelector("video"),
+      caption = blockContent.querySelector("." + this.CSS.input);
 
     if (!video) {
       return this.data;
@@ -172,7 +173,7 @@ class SimpleVideo {
       caption: caption.innerHTML,
       controls: video.controls,
       autoplay: video.autoplay,
-      muted: video.muted
+      muted: video.muted,
     });
   }
 
@@ -203,7 +204,7 @@ class SimpleVideo {
     return new Promise((resolve, reject) => {
       resolve({
         url: URL.createObjectURL(file),
-        caption: file.name
+        caption: file.name,
       });
     });
   }
@@ -215,7 +216,7 @@ class SimpleVideo {
    */
   onPaste(event) {
     switch (event.type) {
-      case 'tag':
+      case "tag":
         const video = event.detail.data;
 
         this.data = {
@@ -223,21 +224,36 @@ class SimpleVideo {
         };
         break;
 
-      case 'pattern':
-        const {data: text} = event.detail;
+      case "pattern":
+        const { data: text } = event.detail;
 
-        this.data = {
-          url: text,
-        };
+        const urls = text.split(" ");
+
+        urls.map((url, index) => {
+          if (index === 0) {
+            this.data = {
+              url: text,
+            };
+          } else {
+            this.api.blocks.insert("video", {
+              url,
+              caption: "",
+              autoplay: false,
+              controls: true,
+              muted: false,
+              stretched: false,
+            });
+          }
+        });
+
         break;
 
-      case 'file':
-        const {file} = event.detail;
+      case "file":
+        const { file } = event.detail;
 
-        this.onDropHandler(file)
-          .then(data => {
-            this.data = data;
-          });
+        this.onDropHandler(file).then((data) => {
+          this.data = data;
+        });
 
         break;
     }
@@ -279,11 +295,11 @@ class SimpleVideo {
   static get pasteConfig() {
     return {
       patterns: {
-        video: /https?:\/\/\S+\.(mp4|webm)$/i
+        video: /(https?:\/\/\S+\.(mp4|webm|mov)\S+(\s)?)+/i,
       },
-      tags: [ 'video' ],
+      tags: ["video"],
       files: {
-        mimeTypes: [ 'video/*' ]
+        mimeTypes: ["video/*"],
       },
     };
   }
@@ -293,15 +309,15 @@ class SimpleVideo {
    * @return {HTMLDivElement}
    */
   renderSettings() {
-    let wrapper = document.createElement('div');
+    let wrapper = document.createElement("div");
 
-    this.settings.forEach( tune => {
-      let el = document.createElement('div');
+    this.settings.forEach((tune) => {
+      let el = document.createElement("div");
 
       el.classList.add(this.CSS.settingsButton);
       el.innerHTML = tune.icon;
 
-      el.addEventListener('click', () => {
+      el.addEventListener("click", () => {
         this._toggleTune(tune.name);
         el.classList.toggle(this.CSS.settingsButtonActive);
       });
@@ -311,7 +327,7 @@ class SimpleVideo {
       wrapper.appendChild(el);
     });
     return wrapper;
-  };
+  }
 
   /**
    * Helper for making Elements with attributes
@@ -324,9 +340,9 @@ class SimpleVideo {
   _make(tagName, classNames = null, attributes = {}) {
     let el = document.createElement(tagName);
 
-    if ( Array.isArray(classNames) ) {
+    if (Array.isArray(classNames)) {
       el.classList.add(...classNames);
-    } else if( classNames ) {
+    } else if (classNames) {
       el.classList.add(classNames);
     }
 
@@ -351,22 +367,27 @@ class SimpleVideo {
    * @private
    */
   _acceptTuneView() {
-    this.settings.forEach( tune => {
-      this.nodes.videoHolder.classList.toggle(this.CSS.videoHolder + '--' + tune.name.replace(/([A-Z])/g, (g) => `-${g[0].toLowerCase()}`), !!this.data[tune.name]);
+    this.settings.forEach((tune) => {
+      this.nodes.videoHolder.classList.toggle(
+        this.CSS.videoHolder +
+          "--" +
+          tune.name.replace(/([A-Z])/g, (g) => `-${g[0].toLowerCase()}`),
+        !!this.data[tune.name]
+      );
 
-      if (tune.name === 'stretched') {
+      if (tune.name === "stretched") {
         this.api.blocks.stretchBlock(this.blockIndex, !!this.data.stretched);
       }
 
-      if (tune.name === 'controls') {
+      if (tune.name === "controls") {
         this.nodes.video.controls = this.data.controls;
       }
 
-      if (tune.name === 'autoplay') {
+      if (tune.name === "autoplay") {
         this.nodes.video.autoplay = this.data.autoplay;
       }
 
-      if (tune.name === 'muted') {
+      if (tune.name === "muted") {
         this.nodes.video.muted = this.data.muted;
       }
     });
